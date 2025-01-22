@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { create, done } from '../store/modules/todo';
 import { useRef } from 'react';
+import '../style/TodoList.scss';
 
 export default function TodoList() {
   // useSelector()를 통해서 store의 state 가져오기
@@ -47,10 +48,11 @@ export default function TodoList() {
                   dispatch(done(todo.id));
                 }}
               >
-                <FontAwesomeIcon icon={faCheck} />
+                <FontAwesomeIcon icon={faCheck} style={{ color: '#f80404' }} />
               </button>
               <span>{todo.text}</span>
             </li>
+            // 수정하기, 삭제하기 기능
           );
         })}
       </ul>
