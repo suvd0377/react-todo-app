@@ -18,6 +18,35 @@ const initialState = {
   ],
 };
 
+// action type에 대한 상수 설정
+const CREATE = 'todo/CREATE';
+const DONE = 'todo/DONE';
+
+// components 에서 사용될 액션 반환 함수
+export function create(payload) {
+  return {
+    type: CREATE,
+    payload: payload, //{id:number,text:String}
+  };
+}
+
+export function done(id) {
+  return {
+    type: DONE,
+    id: id, //id:number
+  };
+}
+
 export function todoReducer(state = initialState, action) {
-  return state;
+  switch (action.type) {
+    case CREATE:
+      console.log('CREATE 호출됨', action);
+      return state;
+    case DONE:
+      console.log('DONE 호출됨', action);
+      return state;
+
+    default:
+      return state;
+  }
 }
