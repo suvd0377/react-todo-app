@@ -12,21 +12,30 @@ export default function TodoList() {
 
   todoList = todoList.filter(todo => todo.done === false);
 
+  const nextID = useSelector(state => state.todo.nextID);
+
   //   useDispatch()를 통해서 dispatch 함수 생성
   const dispatch = useDispatch();
 
   const inputRef = useRef();
 
+  console.log('nextID', nextID);
   const createTodo = () => {
-    dispatch(create({ id: todoList.length + 1, text: inputRef.current.value }));
+    dispatch(create({ id: nextID, text: inputRef.current.value }));
     inputRef.current.value = '';
     inputRef.current.focus();
   };
+
+  const enterTodo = e => {
+    if (e.nativeEvent.isComposing) return;
+    if (e.key == 'Enter') createTodo();
+  };
+
   return (
     <section>
       <h3>할 일 목록</h3>
       <div>
-        <input type="text" ref={inputRef} />
+        <input type="text" ref={inputRef} onKeyDown={enterTodo} />
         <button onClick={createTodo}>추가</button>
       </div>
       <ul>

@@ -1,3 +1,5 @@
+import { retry } from '@reduxjs/toolkit/query';
+
 const initialState = {
   list: [
     {
@@ -17,6 +19,9 @@ const initialState = {
     },
   ],
 };
+
+const count = initialState.list.length; //3
+initialState['nextID'] = count;
 
 // action type에 대한 상수 설정
 const CREATE = 'todo/CREATE';
@@ -40,12 +45,33 @@ export function done(id) {
 export function todoReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE:
+      if (action.payload.text.trim() === '') return state;
       console.log('CREATE 호출됨', action);
-      return state;
+      return {
+        ...state, //원래 있는 것을 그대로 갖고 오기
+        list: state.list.concat({
+          id: action.payload.id,
+          text: action.payload.text,
+          done: false,
+        }),
+        nextID: action.payload.id + 1,
+      };
+
     case DONE:
       console.log('DONE 호출됨', action);
-      return state;
-
+      return {
+        ...state,
+        list: state.list.map(todo => {
+          console.log('im map', todo);
+          //   바꾸고자 하는 조건
+          if (todo.id === action.id) {
+            return {
+              ...todo, // done을 제외하고 text, id 값을 유지시키기 위한 전개연산
+              done: true, //done 값 덮어쓰기
+            };
+          } else return todo;
+        }),
+      };
     default:
       return state;
   }
