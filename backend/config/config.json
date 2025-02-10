@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "sesac",
+    "password": "1234",
+    "database": "sesac",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "admin",
+    "password": "sesac12345!",
+    "database": "sesac",
+    "host": "sesac-rds.czm64q6accmc.ap-northeast-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  }
+}
